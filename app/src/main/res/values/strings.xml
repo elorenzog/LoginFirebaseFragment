@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">LoginFirebase</string>
+    <string name="login">Login</string>
+    <string name="no_account">Not have account? <b>Signup</b></string>
+    <string name="forgot_password">I forgot my <b>password</b></string>
+    <string name="name_profile"><b>Name:</b> </string>
+    <string name="lastname_profile"><b>LastName:</b> </string>
+    <string name="phone_number_profile"><b>PhoneNumber:</b> </string>
+    <string name="email_profile"><b>Email:</b> </string>
+    <string name="sex_profile"><b>Gender:</b> </string>
+    <string name="birth_date_profile"><b>BirthDate:</b> </string>
+    <string name="country_profile"><b>Country:</b> </string>
+    <string name="province_profile"><b>Province:</b> </string>
+    <string name="address_profile"><b>Address:</b> </string>
+</resources>

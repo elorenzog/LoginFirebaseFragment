@@ -14,4 +14,5 @@ ToDo App with firebase and SQLite, fragments and others
 * [X] Modificar los datos de una tareas - Hecho
 
 **Realizado por:** *elorenzog*
+
 Practica de Desarrollo de aplicaciones I

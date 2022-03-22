@@ -1,33 +1,26 @@
-package com.mastersoft.loginfirebase
+package com.mastersoft.loginfirebase.fragments
 
 import android.app.ProgressDialog
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Patterns
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.Toast
-import androidx.appcompat.app.ActionBar
-import androidx.core.view.children
 import androidx.core.view.get
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.mastersoft.loginfirebase.databinding.ActivitySignUpBinding
-import java.time.LocalDate
-import java.util.*
-import kotlin.Exception
-import kotlin.collections.HashMap
+import com.mastersoft.loginfirebase.data.user.User
+import com.mastersoft.loginfirebase.databinding.FragmentSignUpBinding
 
-class SignUpActivity : AppCompatActivity() {
-
+class SignUpFragment : Fragment() {
     // ViewBinding
-    private lateinit var binding: ActivitySignUpBinding
-
-    // ActionBar
-    private lateinit var actionBar: ActionBar
+    private lateinit var binding: FragmentSignUpBinding
 
     // ProgressDialog
     private lateinit var progressDialog: ProgressDialog
@@ -49,18 +42,14 @@ class SignUpActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySignUpBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = FragmentSignUpBinding.inflate(layoutInflater)
 
-        // ActionBar
-        actionBar = supportActionBar!!
-        actionBar.title = "Sign Up"
-        actionBar.setDisplayHomeAsUpEnabled(true)
-        actionBar.setDisplayShowHomeEnabled(true)
+    }
 
-
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         // Progress Dialog
-        progressDialog = ProgressDialog(this)
+        progressDialog = ProgressDialog(requireContext())
         progressDialog.setTitle("Please wait")
         progressDialog.setMessage("Creating account...")
         progressDialog.setCanceledOnTouchOutside(false)
@@ -72,12 +61,6 @@ class SignUpActivity : AppCompatActivity() {
         binding.signUpBtn.setOnClickListener{
             validateData()
         }
-
-    }
-
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-        finish()
     }
 
     private fun validateData() {
@@ -87,7 +70,7 @@ class SignUpActivity : AppCompatActivity() {
         email = binding.emailEt.text.toString().trim()
         password = binding.passwordEt.text.toString().trim()
         val radioButtonId = binding.sexEt.checkedRadioButtonId;
-        val radioSexButton = findViewById<RadioButton>(radioButtonId)
+        val radioSexButton: RadioButton = binding.sexEt[radioButtonId-1] as RadioButton
         sex = radioSexButton.text.toString()
         dateOfBirth = binding.birthEt.text.toString()
         country = binding.countryEt.text.toString().trim()
@@ -118,48 +101,52 @@ class SignUpActivity : AppCompatActivity() {
                 progressDialog.dismiss()
                 val firebaseUser = firebaseAuth.currentUser
                 val email = firebaseUser!!.email
-                Toast.makeText(this,"Account created with email $email", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),"Account created with email $email", Toast.LENGTH_SHORT).show()
                 // data
-                var user = User()
-                user.userid = email.toString()
-                user.name = name
-                user.last_name = lastName
-                user.phone_number = phoneNumber
-                user.sex = sex
-                user.date_of_birth = dateOfBirth
-                user.country = country
-                user.province = province
-                user.address = address
+                var user = User(
+                    firebaseUser.uid,
+                    name,
+                    lastName,
+                    phoneNumber,
+                    sex,
+                    dateOfBirth,
+                    country,
+                    province,
+                    address
+                )
+//                user.userid = email.toString()
+//                user.name = name
+//                user.last_name = lastName
+//                user.phone_number = phoneNumber
+//                user.sex = sex
+//                user.date_of_birth = dateOfBirth
+//                user.country = country
+//                user.province = province
+//                user.address = address
 //
                 try {
                     database.child("users").child(firebaseUser.uid).setValue(user)
                     database.push()
-                    startActivity(Intent(this, ProfileActivity::class.java))
-                    finish()
+//                    startActivity(Intent(this, ProfileActivity::class.java))
                 }
                 catch (e: Exception){
-                    Toast.makeText(this,"An error has occurred", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(),"An error has occurred", Toast.LENGTH_SHORT).show()
                 }
 
 
             }
             .addOnFailureListener{ e->
                 progressDialog.dismiss()
-                Toast.makeText(this,"SignUp Failed due to ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),"SignUp Failed due to ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
-}
 
-class User {
-    lateinit var name: String
-    lateinit var last_name: String
-    lateinit var phone_number: String
-    lateinit var sex: String
-    lateinit var date_of_birth: String
-    lateinit var country: String
-    lateinit var province: String
-    lateinit var address: String
-    lateinit var userid: String
-
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        return binding.root
+    }
 
 }

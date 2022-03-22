@@ -6,9 +6,17 @@
         <entry key="..\:/Users/Eliezer/AndroidStudioProjects/LoginFirebase/app/src/main/res/layout/activity_forgot_password.xml" value="0.1" />
         <entry key="..\:/Users/Eliezer/AndroidStudioProjects/LoginFirebase/app/src/main/res/layout/activity_forgot_user.xml" value="0.2" />
         <entry key="..\:/Users/Eliezer/AndroidStudioProjects/LoginFirebase/app/src/main/res/layout/activity_login.xml" value="0.25" />
-        <entry key="..\:/Users/Eliezer/AndroidStudioProjects/LoginFirebase/app/src/main/res/layout/activity_main.xml" value="0.17481884057971014" />
+        <entry key="..\:/Users/Eliezer/AndroidStudioProjects/LoginFirebase/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/Eliezer/AndroidStudioProjects/LoginFirebase/app/src/main/res/layout/activity_profile.xml" value="0.16" />
         <entry key="..\:/Users/Eliezer/AndroidStudioProjects/LoginFirebase/app/src/main/res/layout/activity_sign_up.xml" value="0.25" />
+        <entry key="..\:/Users/Eliezer/AndroidStudioProjects/LoginFirebase/app/src/main/res/layout/fragment_add_task.xml" value="0.22" />
+        <entry key="..\:/Users/Eliezer/AndroidStudioProjects/LoginFirebase/app/src/main/res/layout/fragment_forgot_password.xml" value="0.25" />
+        <entry key="..\:/Users/Eliezer/AndroidStudioProjects/LoginFirebase/app/src/main/res/layout/fragment_login.xml" value="0.1" />
+        <entry key="..\:/Users/Eliezer/AndroidStudioProjects/LoginFirebase/app/src/main/res/layout/fragment_profile.xml" value="0.16842105263157894" />
+        <entry key="..\:/Users/Eliezer/AndroidStudioProjects/LoginFirebase/app/src/main/res/layout/fragment_sign_up.xml" value="0.16842105263157894" />
+        <entry key="..\:/Users/Eliezer/AndroidStudioProjects/LoginFirebase/app/src/main/res/layout/fragment_to_do_list.xml" value="0.13445378151260504" />
+        <entry key="..\:/Users/Eliezer/AndroidStudioProjects/LoginFirebase/app/src/main/res/layout/fragment_update_profile.xml" value="0.16842105263157894" />
+        <entry key="..\:/Users/Eliezer/AndroidStudioProjects/LoginFirebase/app/src/main/res/layout/fragment_update_task.xml" value="0.16842105263157894" />
       </map>
     </option>
   </component>

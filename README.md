@@ -15,4 +15,4 @@ ToDo App with firebase and SQLite, fragments and others
 
 **Realizado por:** *elorenzog*
 
-Practica de Desarrollo de aplicaciones I
+Practica de Desarrollo de aplicaciones moviles I

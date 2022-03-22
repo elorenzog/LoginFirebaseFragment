@@ -1,4 +1,4 @@
-package com.mastersoft.loginfirebase.fragments
+package com.mastersoft.loginfirebase.fragments.user
 
 import android.app.ProgressDialog
 import android.os.Bundle

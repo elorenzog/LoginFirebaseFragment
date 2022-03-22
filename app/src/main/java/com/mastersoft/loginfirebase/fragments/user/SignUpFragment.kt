@@ -1,4 +1,4 @@
-package com.mastersoft.loginfirebase.fragments
+package com.mastersoft.loginfirebase.fragments.user
 
 import android.app.ProgressDialog
 import android.os.Bundle
@@ -11,11 +11,12 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.core.view.get
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
+import com.mastersoft.loginfirebase.R
 import com.mastersoft.loginfirebase.data.user.User
+import com.mastersoft.loginfirebase.data.user.UserViewModel
 import com.mastersoft.loginfirebase.databinding.FragmentSignUpBinding
 
 class SignUpFragment : Fragment() {
@@ -27,7 +28,8 @@ class SignUpFragment : Fragment() {
 
     // FirebaseAuth
     private lateinit var firebaseAuth: FirebaseAuth
-    private lateinit var database: DatabaseReference
+    private lateinit var userViewModel: UserViewModel
+//    private lateinit var database: DatabaseReference
 
     private var name = ""
     private var lastName = ""
@@ -43,6 +45,8 @@ class SignUpFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FragmentSignUpBinding.inflate(layoutInflater)
+        userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+
 
     }
 
@@ -55,7 +59,7 @@ class SignUpFragment : Fragment() {
         progressDialog.setCanceledOnTouchOutside(false)
 
         firebaseAuth = FirebaseAuth.getInstance()
-        database = Firebase.database.reference
+//        database = Firebase.database.reference
 
         // handle click
         binding.signUpBtn.setOnClickListener{
@@ -114,6 +118,7 @@ class SignUpFragment : Fragment() {
                     province,
                     address
                 )
+//                UserViewModel
 //                user.userid = email.toString()
 //                user.name = name
 //                user.last_name = lastName
@@ -125,8 +130,11 @@ class SignUpFragment : Fragment() {
 //                user.address = address
 //
                 try {
-                    database.child("users").child(firebaseUser.uid).setValue(user)
-                    database.push()
+                    userViewModel.addUser(user)
+                    Toast.makeText(requireContext(), "Successfully added!", Toast.LENGTH_LONG).show()
+                    findNavController().navigate(R.id.action_signUpFragment_to_toDoListFragment)
+//                    database.child("users").child(firebaseUser.uid).setValue(user)
+//                    database.push()
 //                    startActivity(Intent(this, ProfileActivity::class.java))
                 }
                 catch (e: Exception){

@@ -1,20 +1,23 @@
-package com.mastersoft.loginfirebase.fragments
+package com.mastersoft.loginfirebase.fragments.user
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
-import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.mastersoft.loginfirebase.R
+import com.mastersoft.loginfirebase.data.task.TaskViewModel
 import com.mastersoft.loginfirebase.data.user.User
+import com.mastersoft.loginfirebase.data.user.UserViewModel
 import com.mastersoft.loginfirebase.databinding.FragmentProfileBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -28,9 +31,12 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class ProfileFragment : Fragment() {
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
+    lateinit var userFound: List<User>
 
     // ViewBinding
     private lateinit var binding: FragmentProfileBinding
@@ -41,11 +47,14 @@ class ProfileFragment : Fragment() {
     // FirebaseAuthorization
     private lateinit var database: DatabaseReference
     private lateinit var firebaseAuth: FirebaseAuth
+    lateinit var userViewModel: UserViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FragmentProfileBinding.inflate(layoutInflater)
+        userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
@@ -54,13 +63,6 @@ class ProfileFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-//        setContentView(binding.root)
-
-
-//        // Configure actionbar
-//        actionBar = supportActionBar!!
-//        actionBar.title = "Profile"
 
         // Init firebase authentication
         firebaseAuth = FirebaseAuth.getInstance()
@@ -72,6 +74,10 @@ class ProfileFragment : Fragment() {
             chekUser()
         }
 
+        binding.floatingActionButtonEdit.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_updateProfileFragment)
+        }
+
 
     }
 
@@ -79,27 +85,26 @@ class ProfileFragment : Fragment() {
         // check user is logged
         val firebaseUser = firebaseAuth.currentUser
         if (firebaseUser != null) {
-
+            val adapter = ListController()
             try {
                 // texts
-                val data = database.child("users").child(firebaseUser.uid).get().addOnSuccessListener {
 
-                    var userFound = it.getValue<User>()
-                    if (userFound != null) {
-                        (getString(R.string.name_profile) + userFound.name).also { binding.nameProfileEt.text = it }
-                        binding.lastNameProfileEt.text = getString(R.string.lastname_profile) + userFound.last_name
-                        binding.phoneNumberProfileEt.text = getString(R.string.phone_number_profile) + userFound.phone_number
-                        binding.sexProfileEt.text = getString(R.string.sex_profile) + userFound.sex
-                        binding.emailProfileEt.text =  getString(R.string.email_profile) + userFound.userid
-                        binding.countryProfileEt.text = getString(R.string.country_profile) + userFound.country
-                        binding.provinceProfileEt.text = getString(R.string.province_profile) + userFound.province
-                        binding.addressProfileEt.text = getString(R.string.address_profile) + userFound.address
-                        binding.birthProfileEt.text = getString(R.string.birth_date_profile) + userFound.date_of_birth
-                    }
-                }.addOnFailureListener{
-                    Toast.makeText(requireContext(),"Error getting data from firebase", Toast.LENGTH_SHORT).show()
-                    Log.e("firebase", "Error getting data", it)
-                }
+
+                userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+                val userFound = userViewModel.readOneUser(firebaseUser.uid)
+
+//                assert(userFound, )
+//
+//                userFound = adapter.taskList[0]
+//                (getString(R.string.name_profile) + userFound.name).also { binding.nameProfileEt.text = it }
+//                binding.lastNameProfileEt.text = getString(R.string.lastname_profile) + userFound.last_name
+//                binding.phoneNumberProfileEt.text = getString(R.string.phone_number_profile) + userFound.phone_number
+//                binding.sexProfileEt.text = getString(R.string.sex_profile) + userFound.sex
+//                binding.emailProfileEt.text =  getString(R.string.email_profile) + userFound.userid
+//                binding.countryProfileEt.text = getString(R.string.country_profile) + userFound.country
+//                binding.provinceProfileEt.text = getString(R.string.province_profile) + userFound.province
+//                binding.addressProfileEt.text = getString(R.string.address_profile) + userFound.address
+//                binding.birthProfileEt.text = getString(R.string.birth_date_profile) + userFound.date_of_birth
             }
             catch (e: Exception){
                 Toast.makeText(requireContext(),"Error getting data ${e.message}", Toast.LENGTH_SHORT).show()

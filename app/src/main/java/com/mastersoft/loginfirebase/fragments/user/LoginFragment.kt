@@ -1,4 +1,4 @@
-package com.mastersoft.loginfirebase.fragments
+package com.mastersoft.loginfirebase.fragments.user
 
 import android.app.ProgressDialog
 import android.os.Bundle
@@ -10,24 +10,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.mastersoft.loginfirebase.R
 import com.mastersoft.loginfirebase.databinding.FragmentLoginBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [LoginFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class LoginFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
     // ViewBinding
     private lateinit var binding: FragmentLoginBinding
@@ -47,10 +36,6 @@ class LoginFragment : Fragment() {
         super.onCreate(savedInstanceState)
         binding = FragmentLoginBinding.inflate(layoutInflater)
 
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
@@ -142,11 +127,12 @@ class LoginFragment : Fragment() {
                 // get user info
                 val firebaseUser = firebaseAuth.currentUser
                 val email = firebaseUser!!.email
-                val transaction = requireFragmentManager().beginTransaction()
-                val fragment = ProfileFragment()
-                transaction.replace(R.id.fragmentContainer, fragment)
-                transaction.addToBackStack(null)
-                transaction.commit()
+                findNavController().navigate(R.id.action_loginFragment_to_toDoListFragment)
+//                val transaction = requireFragmentManager().beginTransaction()
+//                val fragment = ProfileFragment()
+//                transaction.replace(R.id.fragmentContainer, fragment)
+//                transaction.addToBackStack(null)
+//                transaction.commit()
                 Toast.makeText(requireContext(),"LoggedIn as $email", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener{ e->
@@ -158,31 +144,8 @@ class LoginFragment : Fragment() {
     private fun chekUser() {
         val firebaseUser = firebaseAuth.currentUser
         if (firebaseUser != null){
-            val transaction = requireFragmentManager().beginTransaction()
-            val fragment = ProfileFragment()
-            transaction.replace(R.id.fragmentContainer, fragment)
-            transaction.addToBackStack(null)
-            transaction.commit()
+            findNavController().navigate(R.id.action_loginFragment_to_toDoListFragment)
         }
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment LoginFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            LoginFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }

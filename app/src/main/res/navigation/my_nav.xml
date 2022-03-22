@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/my_nav"
-    app:startDestination="@id/toDoListFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/toDoListFragment"
-        android:name="com.mastersoft.loginfirebase.fragments.ToDoListFragment"
+        android:name="com.mastersoft.loginfirebase.fragments.task.ToDoListFragment"
         android:label="fragment_to_do_list"
         tools:layout="@layout/fragment_to_do_list" >
         <action
@@ -16,10 +16,13 @@
         <action
             android:id="@+id/action_toDoListFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_toDoListFragment_to_updateTaskFragment"
+            app:destination="@id/updateTaskFragment" />
     </fragment>
     <fragment
         android:id="@+id/addTaskFragment"
-        android:name="com.mastersoft.loginfirebase.fragments.AddTaskFragment"
+        android:name="com.mastersoft.loginfirebase.fragments.task.AddTaskFragment"
         android:label="fragment_add_task"
         tools:layout="@layout/fragment_add_task" >
         <action
@@ -28,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.mastersoft.loginfirebase.fragments.LoginFragment"
+        android:name="com.mastersoft.loginfirebase.fragments.user.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -43,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.mastersoft.loginfirebase.fragments.SignUpFragment"
+        android:name="com.mastersoft.loginfirebase.fragments.user.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" >
         <action
@@ -52,7 +55,7 @@
     </fragment>
     <fragment
         android:id="@+id/forgotPasswordFragment"
-        android:name="com.mastersoft.loginfirebase.fragments.ForgotPasswordFragment"
+        android:name="com.mastersoft.loginfirebase.fragments.user.ForgotPasswordFragment"
         android:label="fragment_forgot_password"
         tools:layout="@layout/fragment_forgot_password" >
         <action
@@ -61,7 +64,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.mastersoft.loginfirebase.fragments.ProfileFragment"
+        android:name="com.mastersoft.loginfirebase.fragments.user.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -73,11 +76,25 @@
     </fragment>
     <fragment
         android:id="@+id/updateProfileFragment"
-        android:name="com.mastersoft.loginfirebase.fragments.UpdateProfileFragment"
+        android:name="com.mastersoft.loginfirebase.fragments.user.UpdateProfileFragment"
         android:label="fragment_update_profile"
         tools:layout="@layout/fragment_update_profile" >
         <action
             android:id="@+id/action_updateProfileFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <argument
+            android:name="currentUser"
+            app:argType="com.mastersoft.loginfirebase.data.user.User" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateTaskFragment"
+        android:name="com.mastersoft.loginfirebase.fragments.task.UpdateTaskFragment"
+        android:label="UpdateTaskFragment" >
+        <action
+            android:id="@+id/action_updateTaskFragment_to_toDoListFragment"
+            app:destination="@id/toDoListFragment" />
+        <argument
+            android:name="currentTask"
+            app:argType="com.mastersoft.loginfirebase.data.task.Task" />
     </fragment>
 </navigation>

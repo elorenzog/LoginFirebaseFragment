@@ -8,7 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class TaskViewModel(application: Application): AndroidViewModel(application) {
-    private val readAllTasks: LiveData<List<Task>>
+    val readAllTasks: LiveData<List<Task>>
     private val repository: TaskRepository
 
     init {
@@ -17,9 +17,27 @@ class TaskViewModel(application: Application): AndroidViewModel(application) {
         readAllTasks = repository.readAllTasks
     }
 
-    fun addUser(task: Task) {
+    fun addTask(task: Task) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.addTask(task)
+        }
+    }
+
+    fun updateTask(task: Task){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateTask(task)
+        }
+    }
+
+    fun deleteTask(task: Task) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteTask(task)
+        }
+    }
+
+    fun deleteAllTasks() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteAllTasks()
         }
     }
 }

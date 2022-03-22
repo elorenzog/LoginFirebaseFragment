@@ -6,7 +6,6 @@ import androidx.appcompat.app.ActionBar
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.mastersoft.loginfirebase.databinding.ActivityMainBinding
-import com.mastersoft.loginfirebase.fragments.LoginFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 //        bundle.put("value", this)
         bundle.putString("hello", login)
 
-        setupActionBarWithNavController(findNavController(R.id.fragment))
+        setupActionBarWithNavController(findNavController(R.id.fragmentContainer))
 
 //        val fragment = LoginFragment()
 //        fragment.arguments = bundle
@@ -38,5 +37,10 @@ class MainActivity : AppCompatActivity() {
 //        transaction.addToBackStack(null)
 //        transaction.commit()
 
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.fragmentContainer)
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }

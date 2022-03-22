@@ -13,4 +13,7 @@ interface UserDao {
 
     @Query("SELECT * FROM users ORDER BY name ASC")
     fun readAllUsers(): LiveData<List<User>>
+
+    @Query("SELECT * FROM users WHERE userid LIKE :id")
+    suspend fun readOneUser(id: String): LiveData<List<User>>
 }

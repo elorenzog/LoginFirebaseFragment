@@ -7,7 +7,8 @@ ToDo App with firebase and SQLite, fragments and others
 * [X] Registrarse - Hecho
 * [X] Recuperar contraseña - Hecho
 * [ ] Modificar su perfil - NO
-* [ ] Ver todas las tareas y filtrarlas por su estado - NO
+* [X] Ver todas las tareas - Hecho
+* [ ] Filtrar las tareas por su estado - NO
 * [X] Registrar tareas - Hecho
 * [ ] Marcar tareas como completadas - NO
 * [X] Remover tareas con previa confirmación - Hecho
